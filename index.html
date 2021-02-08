@@ -35,21 +35,20 @@ map.setMaxBounds(new L.LatLngBounds(
 ));
 
 // Markers and Popups
+// LatLng
 var marker = L.marker([70,-160], {
     draggable: true,
 }).addTo(map);
 marker.bindPopup('');
 
-var marker_heroes = L.marker([26.2,-5.6]).addTo(map);
+// Pixels
+var marker_heroes = L.marker(map.unproject([1904, 1968], map.getMaxZoom())).addTo(map);
 marker_heroes.bindPopup('<b>Here we are!</b>').openPopup();
 
 marker.on('dragend', function(e) {
-    marker.getPopup().setContent(marker.getLatLng().toString()).openOn(map);
-    // var x = e.latlng.lat;
-    // var y = e.latlng.lng;
-    // var mark = L.marker([x, y,]).addTo(map);
-    // mark.bindPopup(`<b>${x}, ${y}</b>`).openPopup();
-    // markers.push(mark);
+    marker.getPopup().setContent(marker.getLatLng().toString() + '<br/>'
+    + 'Pixels ' + map.project(marker.getLatLng(), map.getMaxZoom()).toString()
+    ).openOn(map);
 });
 
 </script>
