@@ -13,6 +13,9 @@
 <div id="map" style="width: 100%; height: 100%; background-color: #888888;">
 
 <script type="text/javascript">
+// Variables
+var mapSW = [0, 4096],
+    mapNE = [4096, 0];
 
 // Declare map object
 var map = L.map('map').setView([0,0], 0);
@@ -23,7 +26,13 @@ L.tileLayer('maps/citypark/{z}/{x}/{y}.png', {
     maxZoom: 4,
     continuousWorld: false,
     noWrap: true,
+    crs: L.CRS.Simple,
 }).addTo(map);
+
+map.setMaxBounds(new L.LatLngBounds(
+    map.unproject(mapSW, map.getMaxZoom()),
+    map.unproject(mapNE, map.getMaxZoom())
+));
 
 // Markers and Popups
 var marker = L.marker([70,-160], {
