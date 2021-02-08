@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html style="height: 100%; margin: 0;">
+
+<head>
+<title>CityPark</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="scripts/leaflet/leaflet.css">
+<script src="scripts/leaflet/leaflet.js"></script>
+<body style="height: 100%; margin: 0;">
+
+<div id="map" style="width: 100%; height: 100%; background-color: #888888;">
+
+<script type="text/javascript">
+
+// Declare map object
+var map = L.map('map').setView([0,0], 0);
+
+// Reference the tiles
+L.tileLayer('maps/citypark/{z}/{x}/{y}.png', {
+    minZoom: 0,
+    maxZoom: 4,
+    continuousWorld: false,
+    noWrap: true,
+}).addTo(map);
+
+// Markers and Popups
+var marker = L.marker([70,-160], {
+    draggable: true,
+}).addTo(map);
+marker.bindPopup('');
+
+var marker_heroes = L.marker([26.2,-5.6]).addTo(map);
+marker_heroes.bindPopup('<b>Here we are!</b>').openPopup();
+
+marker.on('dragend', function(e) {
+    marker.getPopup().setContent(marker.getLatLng().toString()).openOn(map);
+    // var x = e.latlng.lat;
+    // var y = e.latlng.lng;
+    // var mark = L.marker([x, y,]).addTo(map);
+    // mark.bindPopup(`<b>${x}, ${y}</b>`).openPopup();
+    // markers.push(mark);
+});
+
+</script>
+</div>
+</body>
+</head>
+
+</html>
